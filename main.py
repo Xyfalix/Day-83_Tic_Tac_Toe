@@ -89,9 +89,26 @@ def stalemate():
         print("All spaces on the board are filled, it's a draw!")
         game_on = False
 
+def replay_game():
+    global game_on
+    # check if game is completed due to a draw or win
+    if not game_on:
+        game_restart = input("Would you like to play again? Press 'y' to play again or 'n' to stop.").lower()
+        if game_restart == 'y':
+            game_on = True
+            return tic_tac_toe()
+        elif game_restart == 'n':
+            print("Thank you for playing! ")
+            return
+        # invalid input
+        else:
+            print("You have keyed in an invalid response, please try again!")
+            return replay_game()
+
 
 def tic_tac_toe():
     player_selection = 0
+    global game_on
     while game_on:
         # run the position_selector function for player to select position to place 'X' or 'O'
         position_selector(player_selection)
@@ -108,6 +125,9 @@ def tic_tac_toe():
 
         # check if board is full, indicating a draw.
         stalemate()
+
+        # check if player wants to play again
+        replay_game()
 
 print("Welcome to Nicholas's text based version of Tic Tac Toe! The blank board is shown below for reference."
       "\nThe rows and columns are numbered 0 to 2 for subsequent input requests.")
